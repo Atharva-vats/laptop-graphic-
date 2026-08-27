@@ -3,27 +3,914 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scroll Frame Experience</title>
+  <title>MacBook Pro — Mind-blowing. Head-turning. — Apple</title>
+  <meta name="description" content="MacBook Pro with M4, M4 Pro, and M4 Max chips. Featuring Liquid Retina XDR display, up to 24 hours of battery life, and pro performance in an impossible unibody.">
+  
+  <!-- Inter Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="theme-dark">
+  <!-- Custom Magnetic Cursor -->
+  <div id="custom-cursor" class="custom-cursor"></div>
+  <div id="custom-cursor-follower" class="custom-cursor-follower"></div>
+
+  <!-- Audio Mute / FX Notification Toast -->
+  <div id="sound-toast" class="sound-toast">
+    <span id="sound-toast-icon">🔊</span>
+    <span id="sound-toast-text">Audio FX Enabled</span>
+  </div>
+
   <!-- Preloader Screen -->
   <div id="loader" class="loader">
     <div class="loader-content">
-      <div class="loader-spinner"></div>
+      <div class="apple-loader-logo">
+        <svg viewBox="0 0 170 170" width="48" height="48" fill="currentColor">
+          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.67-7.81-11.96-14.34-5.77-8.8-10.34-18.9-13.72-30.3-3.37-11.4-5.06-22.19-5.06-32.36 0-14.68 3.7-27.13 11.1-37.36 7.4-10.23 16.9-15.45 28.5-15.66 4.35 0 9.28 1.05 14.78 3.17 5.51 2.12 9.07 3.24 10.7 3.35 2.18 0 5.99-1.2 11.44-3.6 5.44-2.4 10.19-3.5 14.23-3.3 10.67.64 19.34 4.54 26.01 11.7-9.37 5.67-13.94 13.6-13.72 23.8.22 8.05 3.28 14.8 9.17 20.24 5.9 5.44 12.87 8.5 20.9 9.19-2.2 6.5-4.9 12.8-8.1 18.9zM119.22 33.15c0-6.84 2.5-13.3 7.5-19.39 5-6.09 11.3-10.02 18.9-11.76.65 6.31-.76 12.51-4.24 18.6-3.48 6.09-8.48 10.65-15 13.68-2.62.98-4.94 1.4-6.96 1.28-.1-0.8-.2-1.6-.2-2.41z"/>
+        </svg>
+      </div>
       <div class="loader-bar-bg">
         <div id="loader-bar" class="loader-bar"></div>
       </div>
-      <div id="loader-text" class="loader-text">Loading 0%</div>
+      <div class="loader-meta">
+        <span id="loader-status" class="loader-status">Initializing Neural Hardware</span>
+        <span id="loader-text" class="loader-text">0%</span>
+      </div>
     </div>
   </div>
 
-  <!-- Fullscreen Fixed Canvas Background -->
-  <canvas id="hero-canvas"></canvas>
+  <!-- Global Apple Header -->
+  <header class="apple-nav-header" id="global-nav">
+    <div class="nav-container">
+      <a href="#hero-story" class="nav-logo" aria-label="Apple">
+        <svg viewBox="0 0 170 170" width="16" height="16" fill="currentColor">
+          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.67-7.81-11.96-14.34-5.77-8.8-10.34-18.9-13.72-30.3-3.37-11.4-5.06-22.19-5.06-32.36 0-14.68 3.7-27.13 11.1-37.36 7.4-10.23 16.9-15.45 28.5-15.66 4.35 0 9.28 1.05 14.78 3.17 5.51 2.12 9.07 3.24 10.7 3.35 2.18 0 5.99-1.2 11.44-3.6 5.44-2.4 10.19-3.5 14.23-3.3 10.67.64 19.34 4.54 26.01 11.7-9.37 5.67-13.94 13.6-13.72 23.8.22 8.05 3.28 14.8 9.17 20.24 5.9 5.44 12.87 8.5 20.9 9.19-2.2 6.5-4.9 12.8-8.1 18.9zM119.22 33.15c0-6.84 2.5-13.3 7.5-19.39 5-6.09 11.3-10.02 18.9-11.76.65 6.31-.76 12.51-4.24 18.6-3.48 6.09-8.48 10.65-15 13.68-2.62.98-4.94 1.4-6.96 1.28-.1-0.8-.2-1.6-.2-2.41z"/>
+        </svg>
+      </a>
+      <nav class="nav-links">
+        <a href="#hero-story" class="nav-link active">Overview</a>
+        <a href="#color-studio" class="nav-link">Design</a>
+        <a href="#m4-chip" class="nav-link">M4 Max</a>
+        <a href="#display-section" class="nav-link">Display</a>
+        <a href="#thermal-audio" class="nav-link">Thermals & Audio</a>
+        <a href="#keyboard-section" class="nav-link">Keyboard</a>
+        <a href="#ports-section" class="nav-link">Ports</a>
+        <a href="#configurator" class="nav-link">Configurator</a>
+        <a href="#tech-specs" class="nav-link">Tech Specs</a>
+      </nav>
+      <div class="nav-actions">
+        <button id="sound-toggle-btn" class="nav-icon-btn" aria-label="Toggle Sound Effects" title="Toggle Sound FX">
+          <svg class="sound-on-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <svg class="sound-off-icon hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+        <a href="#configurator" class="btn-primary-pill nav-buy-btn">Buy</a>
+      </div>
+    </div>
+    <div class="header-scroll-progress" id="header-progress"></div>
+  </header>
 
-  <!-- Scroll Height Container to Drive Playback -->
-  <div class="scroll-track" id="scroll-track"></div>
+  <!-- Sticky Subheader / Model Bar -->
+  <div class="product-subnav" id="product-subnav">
+    <div class="subnav-container">
+      <div class="subnav-title">
+        <span class="subnav-name">MacBook Pro</span>
+        <span class="subnav-tag">14" and 16" models with M4, M4 Pro, or M4 Max</span>
+      </div>
+      <div class="subnav-right">
+        <span class="subnav-price">From $1,599 or $133.25/mo.</span>
+        <a href="#configurator" class="btn-accent-sm">Configure</a>
+      </div>
+    </div>
+  </div>
 
+  <!-- MAIN SCROLL CINEMATIC EXPERIENCE -->
+  <section class="hero-scrub-section" id="hero-story">
+    <!-- Sticky High-DPI Canvas Viewport with Attached Overlays -->
+    <div class="canvas-sticky-container" id="hero-sticky-wrap">
+      <canvas id="hero-canvas"></canvas>
+      <div class="canvas-vignette"></div>
+
+      <!-- Story Overlays (Contained inside Sticky Viewport) -->
+      <!-- Milestone 1: Frames 0 - 45 -->
+      <div class="story-panel panel-1 active" id="panel-1">
+        <div class="panel-card-inner">
+          <div class="story-badge">Next Generation</div>
+          <h1 class="hero-super-title">MacBook Pro</h1>
+          <h2 class="hero-gradient-text">Mind-blowing.<br>Head-turning.</h2>
+          <p class="story-lead">The ultimate pro laptop. Armed with the M4 family of chips, it smashes through heavy workflows with unbelievable power and unprecedented 24-hour battery life.</p>
+          <div class="hero-stats-row">
+            <div class="hero-stat-pill">
+              <span class="hero-stat-num">3.5x</span>
+              <span class="hero-stat-lbl">Faster than M1 Max</span>
+            </div>
+            <div class="hero-stat-pill">
+              <span class="hero-stat-num">24 hrs</span>
+              <span class="hero-stat-lbl">Longest battery life</span>
+            </div>
+            <div class="hero-stat-pill">
+              <span class="hero-stat-num">1,600</span>
+              <span class="hero-stat-lbl">Nits peak HDR</span>
+            </div>
+          </div>
+          <div class="scroll-prompt">
+            <span>Scroll down to disassemble</span>
+            <div class="scroll-chevron"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestone 2: Frames 45 - 110 -->
+      <div class="story-panel panel-2" id="panel-2">
+        <div class="panel-card-inner">
+          <div class="story-badge">Engineering Feat</div>
+          <h2 class="hero-gradient-text">Open for pure power.</h2>
+          <p class="story-lead">Unrivaled Liquid Retina XDR screen with extreme dynamic range. Deep blacks, blinding specular highlights, and over a billion vibrant colors in an impossible 1.55cm unibody.</p>
+          <ul class="story-feature-list">
+            <li><span class="bullet-glow"></span> 1,000,000:1 Contrast Ratio</li>
+            <li><span class="bullet-glow"></span> ProMotion 120Hz Adaptive Refresh</li>
+            <li><span class="bullet-glow"></span> Studio-quality three-mic array</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Milestone 3: Frames 110 - 175 -->
+      <div class="story-panel panel-3" id="panel-3">
+        <div class="panel-card-inner">
+          <div class="story-badge">Internal Architecture</div>
+          <h2 class="hero-gradient-text">Precision down to the micron.</h2>
+          <p class="story-lead">A thermal and mechanical masterclass. Every component is custom-forged and stacked with zero wasted space, enabling immense compute throughput with whisper-silent acoustics.</p>
+          <div class="story-chip-preview">
+            <div class="chip-preview-glow"></div>
+            <span class="chip-preview-text">3nm M4 Silicon Architecture</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestone 4: Frames 175 - 240 (Clean Left Placement) -->
+      <div class="story-panel panel-4" id="panel-4">
+        <div class="panel-card-inner">
+          <div class="story-badge">Exploded View</div>
+          <h2 class="hero-gradient-text">Every layer engineered as one.</h2>
+          <p class="story-lead">Inspect the unified sub-systems. Screen, logic board, cooling, and battery work in total harmony.</p>
+          <div class="interaction-hint">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            <span>Hover glowing pins to inspect components</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hotspots Overlay (Synchronized to frame > 175) -->
+      <div class="hotspots-container" id="hotspots-layer">
+        <div class="hotspot" style="top: 14%; left: 50%;" data-title="Screen Assembly">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>Screen Assembly</h4>
+            <p>Liquid Retina XDR. 1,600 nits peak, 1,000,000:1 contrast, 120Hz ProMotion.</p>
+          </div>
+        </div>
+
+        <div class="hotspot" style="top: 29%; left: 50%;" data-title="Magic Keyboard">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>Magic Keyboard</h4>
+            <p>Scissor switches with 1mm key travel & integrated Touch ID secure enclave.</p>
+          </div>
+        </div>
+
+        <div class="hotspot" style="top: 42%; left: 44%;" data-title="Apple M4 Max SoC">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>Apple M4 Max SoC</h4>
+            <p>3nm architecture delivering revolutionary pro GPU computing & hardware ray tracing.</p>
+          </div>
+        </div>
+
+        <div class="hotspot" style="top: 55%; left: 60%;" data-title="Dual Blower Thermal System">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>Dual Blower Cooling</h4>
+            <p>Advanced copper vapor chamber maintains peak performance with zero throttling.</p>
+          </div>
+        </div>
+
+        <div class="hotspot" style="top: 70%; left: 50%;" data-title="100-Watt-Hour Battery">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>100Wh Power Cells</h4>
+            <p>The longest battery life ever in a Mac. Identical speed on battery or plugged in.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Scrub & Assembly HUD -->
+      <div class="scrub-hud" id="scrub-hud">
+        <div class="hud-pill">
+          <button id="hud-play-btn" class="hud-btn" title="Auto Play/Pause">
+            <svg id="hud-play-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <svg id="hud-pause-icon" class="hidden" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+          
+          <div class="hud-slider-wrap">
+            <span class="hud-label">Disassembly</span>
+            <input type="range" id="hud-scrub-slider" min="0" max="239" value="0" step="1" aria-label="Exploded Assembly Scrubber">
+            <span id="hud-percentage" class="hud-val">0%</span>
+          </div>
+
+          <div class="hud-checkpoints">
+            <button class="hud-tag active" data-target-frame="0">Closed</button>
+            <button class="hud-tag" data-target-frame="60">Open</button>
+            <button class="hud-tag" data-target-frame="140">Unfold</button>
+            <button class="hud-tag" data-target-frame="239">Exploded</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Track (500vh to drive smooth scrub duration) -->
+    <div class="scroll-track" id="scroll-track"></div>
+  </section>
+
+  <!-- SECTION 2: COLOR & FINISH STUDIO -->
+  <section class="section-container" id="color-studio">
+    <div class="section-header text-center">
+      <span class="section-badge">Craftsmanship</span>
+      <h2 class="section-title">Anodized to perfection.</h2>
+      <p class="section-subtitle">Forged from 100% recycled aerospace-grade aluminum with breakthrough chemistry that resists fingerprints.</p>
+    </div>
+
+    <div class="finish-showcase-box">
+      <div class="finish-preview-canvas-wrap">
+        <div class="finish-halo" id="finish-halo"></div>
+        <div class="finish-laptop-display" id="finish-device-card">
+          <div class="finish-card-shine"></div>
+          <div class="finish-apple-icon"></div>
+          <div class="finish-model-badge" id="finish-model-text">MacBook Pro in Space Black</div>
+          <div class="finish-specs-badge">Breakthrough Chemistry Seal</div>
+        </div>
+      </div>
+
+      <div class="color-picker-controls">
+        <div class="color-option-row">
+          <button class="color-pill-btn active" data-finish="space-black" data-color="#141416" data-name="Space Black" data-desc="A dark, menacing aluminum finish featuring a groundbreaking anodization seal to dramatically reduce fingerprints.">
+            <span class="swatch" style="background: linear-gradient(135deg, #1c1d20, #0c0d0e);"></span>
+            <span class="swatch-label">Space Black</span>
+          </button>
+          <button class="color-pill-btn" data-finish="silver" data-color="#e3e4e6" data-name="Silver" data-desc="The iconic, radiant Apple metallic finish that reflects pure studio elegance.">
+            <span class="swatch" style="background: linear-gradient(135deg, #f0f1f3, #c5c7cb);"></span>
+            <span class="swatch-label">Silver</span>
+          </button>
+          <button class="color-pill-btn" data-finish="space-gray" data-color="#6e7075" data-name="Space Gray" data-desc="Sophisticated deep gray tones crafted with bead-blasted matte precision.">
+            <span class="swatch" style="background: linear-gradient(135deg, #787a80, #4c4d52);"></span>
+            <span class="swatch-label">Space Gray</span>
+          </button>
+          <button class="color-pill-btn" data-finish="midnight" data-color="#192231" data-name="Midnight" data-desc="Deep cosmic blue with rich obsidian undertones that shift under light.">
+            <span class="swatch" style="background: linear-gradient(135deg, #25334a, #101722);"></span>
+            <span class="swatch-label">Midnight</span>
+          </button>
+        </div>
+        <p class="finish-dynamic-desc" id="finish-dynamic-desc">A dark, menacing aluminum finish featuring a groundbreaking anodization seal to dramatically reduce fingerprints.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: M4 SILICON ARCHITECTURE & LIVE BENCHMARK -->
+  <section class="section-container" id="m4-chip">
+    <div class="section-header text-center">
+      <span class="section-badge">Apple Silicon</span>
+      <h2 class="section-title">A monster leap in compute.</h2>
+      <p class="section-subtitle">Built on second-generation 3-nanometer technology. Featuring the fastest CPU core in the world and hardware-accelerated mesh shading.</p>
+    </div>
+
+    <!-- Chip Switcher Tabs -->
+    <div class="chip-selector-bar">
+      <button class="chip-tab-btn" data-chip="m4">
+        <span class="chip-tab-name">M4</span>
+        <span class="chip-tab-cores">10-Core CPU • 10-Core GPU</span>
+      </button>
+      <button class="chip-tab-btn" data-chip="m4pro">
+        <span class="chip-tab-name">M4 Pro</span>
+        <span class="chip-tab-cores">14-Core CPU • 20-Core GPU</span>
+      </button>
+      <button class="chip-tab-btn active" data-chip="m4max">
+        <span class="chip-tab-name">M4 Max</span>
+        <span class="chip-tab-cores">16-Core CPU • 40-Core GPU</span>
+      </button>
+    </div>
+
+    <!-- Interactive Silicon Die Canvas & Specs -->
+    <div class="chip-interactive-grid">
+      <div class="chip-die-container">
+        <div class="die-glow-effect" id="die-glow"></div>
+        <div class="die-surface">
+          <div class="die-circuit-grid"></div>
+          <div class="die-logo-wrap">
+            <span class="die-apple-logo"></span>
+            <span class="die-chip-title" id="die-chip-title">M4 MAX</span>
+          </div>
+        </div>
+        <div class="die-tech-tags">
+          <span>3nm Gen 2</span>
+          <span>546 GB/s Bandwidth</span>
+          <span>Hardware Ray Tracing</span>
+        </div>
+      </div>
+
+      <!-- Live Dynamic Benchmark Engine -->
+      <div class="benchmark-suite-card">
+        <div class="benchmark-header">
+          <div class="benchmark-title-wrap">
+            <h3 class="benchmark-heading">Real-World Pro Performance</h3>
+            <p class="benchmark-subtext">Select a demanding workload to simulate live throughput comparison.</p>
+          </div>
+          <div class="benchmark-task-pills">
+            <button class="task-pill active" data-task="video">8K ProRes</button>
+            <button class="task-pill" data-task="3d">Ray Tracing</button>
+            <button class="task-pill" data-task="ai">LLM AI</button>
+            <button class="task-pill" data-task="code">Xcode Build</button>
+          </div>
+        </div>
+
+        <div class="benchmark-bars-container" id="benchmark-bars">
+          <!-- Item 1: Selected M4 Chip -->
+          <div class="bar-group highlight">
+            <div class="bar-meta">
+              <span class="bar-label" id="bar-m4-label">MacBook Pro (M4 Max)</span>
+              <span class="bar-value" id="bar-m4-val">3.8x</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill gradient-apple" id="bar-m4-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Item 2: M1 Max -->
+          <div class="bar-group">
+            <div class="bar-meta">
+              <span class="bar-label">MacBook Pro (M1 Max)</span>
+              <span class="bar-value" id="bar-m1-val">1.0x (Baseline)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill fill-dim" id="bar-m1-fill" style="width: 26%;"></div>
+            </div>
+          </div>
+
+          <!-- Item 3: Core i9 Flagship PC -->
+          <div class="bar-group">
+            <div class="bar-meta">
+              <span class="bar-label">Latest Intel Core i9 Laptop (Plugged In)</span>
+              <span class="bar-value" id="bar-i9-val">1.2x</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill fill-intel" id="bar-i9-fill" style="width: 32%;"></div>
+            </div>
+          </div>
+
+          <!-- Item 4: Core i9 Flagship PC (On Battery) -->
+          <div class="bar-group">
+            <div class="bar-meta">
+              <span class="bar-label">Latest Intel Core i9 Laptop (On Battery)</span>
+              <span class="bar-value" id="bar-i9-battery-val">0.45x (Throttled)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill fill-throttled" id="bar-i9-battery-fill" style="width: 12%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="benchmark-footnote">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          <span id="benchmark-desc-text">M4 Max delivers blistering speed whether you are plugged into the wall or working miles away from an outlet.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: LIQUID RETINA XDR DISPLAY SIMULATOR -->
+  <section class="section-container" id="display-section">
+    <div class="section-header text-center">
+      <span class="section-badge">Liquid Retina XDR</span>
+      <h2 class="section-title">Blinding brightness. Infinite contrast.</h2>
+      <p class="section-subtitle">Over 10,000 individual mini-LEDs grouped into custom-controlled local dimming zones. Now with revolutionary Nano-texture glass.</p>
+    </div>
+
+    <div class="display-sim-card">
+      <div class="display-sim-view" id="display-sim-view">
+        <!-- Interactive Screen Content Simulation -->
+        <div class="display-screen-glass" id="display-screen-glass">
+          <div class="display-hdr-visual" id="display-hdr-visual">
+            <div class="hdr-sun-flare" id="hdr-sun-flare"></div>
+            <div class="hdr-artwork-caption">
+              <span class="hdr-badge">Liquid Retina XDR</span>
+              <h3>Dynamic Range Simulator</h3>
+              <p>Experience up to 1,600 nits of peak luminance in HDR mastering workflows.</p>
+            </div>
+          </div>
+          <div class="mini-led-grid-overlay" id="mini-led-grid"></div>
+          <div class="nano-glare-overlay" id="nano-glare-overlay"></div>
+        </div>
+
+        <!-- Floating Live Nits Badge -->
+        <div class="display-nits-readout" id="display-nits-readout">
+          <span class="nits-num" id="nits-val">1,000</span>
+          <span class="nits-unit">NITS SUSTAINED</span>
+        </div>
+      </div>
+
+      <!-- Controls for Display Sim -->
+      <div class="display-controls-bar">
+        <div class="display-control-group">
+          <label for="nits-slider" class="control-label">HDR Luminance Level</label>
+          <div class="slider-with-values">
+            <span class="val-min">500 Nits (SDR)</span>
+            <input type="range" id="nits-slider" min="500" max="1600" value="1000" step="10" aria-label="Luminance Slider">
+            <span class="val-max">1,600 Nits (Peak HDR)</span>
+          </div>
+        </div>
+
+        <div class="display-toggle-group">
+          <div class="toggle-item">
+            <span class="toggle-title">Mini-LED Zones Grid</span>
+            <button id="toggle-miniled-btn" class="toggle-switch" aria-label="Toggle Mini-LED Grid">
+              <span class="toggle-thumb"></span>
+            </button>
+          </div>
+          <div class="toggle-item">
+            <span class="toggle-title">Nano-Texture Glass</span>
+            <button id="toggle-nano-btn" class="toggle-switch active" aria-label="Toggle Nano-Texture Glass">
+              <span class="toggle-thumb"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THERMAL DYNAMICS & SPATIAL ACOUSTICS -->
+  <section class="section-container" id="thermal-audio">
+    <div class="grid-2-col">
+      <!-- Card A: Thermal Dissipation Simulator -->
+      <div class="feature-interactive-card">
+        <div class="card-head">
+          <span class="card-tag">Aero-Thermal System</span>
+          <h3 class="card-title">Stay cool. Zero throttle.</h3>
+          <p class="card-desc">Advanced cooling impellers move air with zero noise during typical tasks, and spin up effortlessly for heavy 3D rendering.</p>
+        </div>
+
+        <div class="thermal-visualizer-box">
+          <canvas id="thermal-canvas" width="400" height="200"></canvas>
+          <div class="thermal-stats-row">
+            <div class="t-stat">
+              <span class="t-val" id="thermal-temp">34°C</span>
+              <span class="t-lbl">SoC Temp</span>
+            </div>
+            <div class="t-stat">
+              <span class="t-val" id="thermal-rpm">0 RPM</span>
+              <span class="t-lbl">Fan Speed</span>
+            </div>
+            <div class="t-stat">
+              <span class="t-val" id="thermal-noise">&lt; 0 dB</span>
+              <span class="t-lbl">Acoustic Noise</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="thermal-slider-control">
+          <label for="thermal-load-slider" class="control-label">Simulate Workload Load</label>
+          <div class="load-presets">
+            <button class="load-pill active" data-load="10">Idle / Browsing</button>
+            <button class="load-pill" data-load="50">4K Editing</button>
+            <button class="load-pill" data-load="100">Cinema 4D Turbo</button>
+          </div>
+          <input type="range" id="thermal-load-slider" min="0" max="100" value="10" aria-label="Workload Load Slider">
+        </div>
+      </div>
+
+      <!-- Card B: 6-Speaker Spatial Audio Soundstage -->
+      <div class="feature-interactive-card">
+        <div class="card-head">
+          <span class="card-tag">Studio Soundstage</span>
+          <h3 class="card-title">Six speakers. Immense bass.</h3>
+          <p class="card-desc">Four force-cancelling woofers and two high-performance tweeters fill the room with expansive Spatial Audio & Dolby Atmos.</p>
+        </div>
+
+        <div class="audio-stage-visualizer" id="audio-stage">
+          <div class="speaker-wave wave-1"></div>
+          <div class="speaker-wave wave-2"></div>
+          <div class="speaker-wave wave-3"></div>
+          <div class="audio-center-speaker">
+            <button id="spatial-audio-play-btn" class="spatial-play-btn" aria-label="Play Spatial Acoustic Demo">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+            <span class="spatial-pulse-label">Tap for Spatial Synth Demo</span>
+          </div>
+        </div>
+
+        <div class="audio-chords-picker">
+          <span class="control-label">Acoustic Tone Presets</span>
+          <div class="chord-buttons-row">
+            <button class="chord-btn active" data-freq="440">Cosmic Major</button>
+            <button class="chord-btn" data-freq="528">Crystal 528Hz</button>
+            <button class="chord-btn" data-freq="320">Deep Sub-Bass</button>
+            <button class="chord-btn" data-freq="659">Cinema Atmos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: MAGIC KEYBOARD & FORCE TOUCH TRACKPAD -->
+  <section class="section-container" id="keyboard-section">
+    <div class="section-header text-center">
+      <span class="section-badge">Tactile Precision</span>
+      <h2 class="section-title">Magic Keyboard. Pure feeling.</h2>
+      <p class="section-subtitle">Full-height function keys with mechanical tactile click, smooth backlighting, and Force Touch trackpad with haptic feedback.</p>
+    </div>
+
+    <div class="keyboard-simulator-card">
+      <div class="keyboard-top-controls">
+        <div class="keyboard-backlight-ctrl">
+          <span class="ctrl-icon">💡</span>
+          <span class="ctrl-name">Backlight Brightness</span>
+          <input type="range" id="keyboard-light-slider" min="0" max="100" value="80" aria-label="Keyboard Backlight">
+          <span id="keyboard-light-val" class="ctrl-val">80%</span>
+        </div>
+
+        <div class="touchid-interactive" id="touchid-trigger" title="Tap to simulate Touch ID">
+          <div class="touchid-ring"></div>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 11c0 2.2-1.8 4-4 4s-4-1.8-4-4 1.8-4 4-4 4 1.8 4 4z"></path>
+            <path d="M16 11c0 4.4-3.6 8-8 8s-8-3.6-8-8 3.6-8 8-8 8 3.6 8 8z"></path>
+            <path d="M20 11c0 6.6-5.4 12-12 12S0 17.6 0 11 5.4 0 12 0s12 5.4 12 12z"></path>
+          </svg>
+          <span id="touchid-status-text">Touch ID Ready</span>
+        </div>
+      </div>
+
+      <!-- Playable Virtual Keyboard Strip -->
+      <div class="interactive-keys-deck" id="keys-deck">
+        <div class="key-row">
+          <button class="key-cap" data-key="esc">esc</button>
+          <button class="key-cap" data-key="f1">F1</button>
+          <button class="key-cap" data-key="f2">F2</button>
+          <button class="key-cap" data-key="f3">F3</button>
+          <button class="key-cap" data-key="f4">F4</button>
+          <button class="key-cap" data-key="f5">F5</button>
+          <button class="key-cap" data-key="f6">F6</button>
+          <button class="key-cap" data-key="f7">F7</button>
+          <button class="key-cap" data-key="f8">F8</button>
+          <button class="key-cap" data-key="f9">F9</button>
+          <button class="key-cap" data-key="f10">F10</button>
+          <button class="key-cap" data-key="f11">F11</button>
+          <button class="key-cap" data-key="f12">F12</button>
+        </div>
+        <div class="key-row">
+          <button class="key-cap key-wide" data-key="tab">tab</button>
+          <button class="key-cap" data-key="q">Q</button>
+          <button class="key-cap" data-key="w">W</button>
+          <button class="key-cap" data-key="e">E</button>
+          <button class="key-cap" data-key="r">R</button>
+          <button class="key-cap" data-key="t">T</button>
+          <button class="key-cap" data-key="y">Y</button>
+          <button class="key-cap" data-key="u">U</button>
+          <button class="key-cap" data-key="i">I</button>
+          <button class="key-cap" data-key="o">O</button>
+          <button class="key-cap" data-key="p">P</button>
+          <button class="key-cap key-wide" data-key="del">delete</button>
+        </div>
+        <div class="key-row">
+          <button class="key-cap key-wide-2" data-key="caps">caps lock</button>
+          <button class="key-cap" data-key="a">A</button>
+          <button class="key-cap" data-key="s">S</button>
+          <button class="key-cap" data-key="d">D</button>
+          <button class="key-cap" data-key="f">F</button>
+          <button class="key-cap" data-key="g">G</button>
+          <button class="key-cap" data-key="h">H</button>
+          <button class="key-cap" data-key="j">J</button>
+          <button class="key-cap" data-key="k">K</button>
+          <button class="key-cap" data-key="l">L</button>
+          <button class="key-cap key-wide-2" data-key="return">return</button>
+        </div>
+        <div class="key-row">
+          <button class="key-cap key-space" data-key="space">space (Click or type on your keyboard!)</button>
+        </div>
+      </div>
+
+      <!-- Force Touch Trackpad Simulator -->
+      <div class="trackpad-sim-area" id="trackpad-sim">
+        <div class="trackpad-haptic-wave" id="trackpad-wave"></div>
+        <div class="trackpad-content">
+          <span class="trackpad-title">Force Touch Trackpad</span>
+          <span class="trackpad-sub">Press & hold anywhere for haptic force-click</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: PORTS & CONNECTIVITY VISUALIZER -->
+  <section class="section-container" id="ports-section">
+    <div class="section-header text-center">
+      <span class="section-badge">Pro Connections</span>
+      <h2 class="section-title">Plug in. Power up. Drive 4 displays.</h2>
+      <p class="section-subtitle">With Thunderbolt 5 transferring up to 120 Gb/s, HDMI 2.1 supporting 8K at 60Hz, and SDXC card reader for instantaneous media offload.</p>
+    </div>
+
+    <div class="ports-chassis-container">
+      <div class="ports-side-card">
+        <h4 class="ports-side-title">Left Side Ports</h4>
+        <div class="ports-edge-render">
+          <!-- MagSafe 3 -->
+          <div class="port-socket" data-port="magsafe" data-spec="MagSafe 3 Fast Charging • 140W support • Fast charge to 50% in 30 mins">
+            <span class="port-icon-shape magsafe-shape"></span>
+            <span class="port-name-tag">MagSafe 3</span>
+          </div>
+          <!-- Thunderbolt 5 (Port 1) -->
+          <div class="port-socket" data-port="tb1" data-spec="Thunderbolt 5 • Up to 120 Gb/s Bandwidth • DisplayPort 2.1 & PCIe Gen 4">
+            <span class="port-icon-shape tb-shape"></span>
+            <span class="port-name-tag">Thunderbolt 5</span>
+          </div>
+          <!-- Thunderbolt 5 (Port 2) -->
+          <div class="port-socket" data-port="tb2" data-spec="Thunderbolt 5 • Up to 120 Gb/s Bandwidth • Native 8K external display">
+            <span class="port-icon-shape tb-shape"></span>
+            <span class="port-name-tag">Thunderbolt 5</span>
+          </div>
+          <!-- 3.5mm Headphone Jack -->
+          <div class="port-socket" data-port="audio" data-spec="3.5mm Audio Jack • Advanced support for high-impedance studio headphones">
+            <span class="port-icon-shape audio-shape"></span>
+            <span class="port-name-tag">3.5mm Headphone</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ports-side-card">
+        <h4 class="ports-side-title">Right Side Ports</h4>
+        <div class="ports-edge-render">
+          <!-- SDXC -->
+          <div class="port-socket" data-port="sdxc" data-spec="SDXC Card Slot • UHS-II Support up to 312 MB/s read speeds">
+            <span class="port-icon-shape sd-shape"></span>
+            <span class="port-name-tag">SDXC Slot</span>
+          </div>
+          <!-- Thunderbolt 5 (Port 3) -->
+          <div class="port-socket" data-port="tb3" data-spec="Thunderbolt 5 • 120 Gb/s • Connect high-speed RAID drives">
+            <span class="port-icon-shape tb-shape"></span>
+            <span class="port-name-tag">Thunderbolt 5</span>
+          </div>
+          <!-- HDMI 2.1 -->
+          <div class="port-socket" data-port="hdmi" data-spec="HDMI 2.1 • Supports up to 8K resolution at 60Hz or 4K at 240Hz">
+            <span class="port-icon-shape hdmi-shape"></span>
+            <span class="port-name-tag">HDMI 2.1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-info-balloon" id="port-info-balloon">
+      <span class="info-badge">Port Details</span>
+      <p id="port-info-text">Hover over any port above to explore bandwidth, external display capabilities, and charging rates.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 8: REAL-TIME HARDWARE CONFIGURATOR & ORDER DRAWER -->
+  <section class="section-container" id="configurator">
+    <div class="section-header text-center">
+      <span class="section-badge">Custom Configuration</span>
+      <h2 class="section-title">Build your dream MacBook Pro.</h2>
+      <p class="section-subtitle">Select your screen size, silicon horsepower, unified memory, and high-speed NVMe storage.</p>
+    </div>
+
+    <div class="configurator-grid">
+      <!-- Config Options Column -->
+      <div class="config-options-column">
+        <!-- 1. Screen Size -->
+        <div class="config-step-box">
+          <span class="step-num">01</span>
+          <h3 class="step-title">Choose your display size</h3>
+          <div class="config-pill-grid">
+            <button class="config-choice-card active" data-group="size" data-val="14" data-price="0">
+              <div class="choice-title">14-inch Liquid Retina XDR</div>
+              <div class="choice-sub">3024-by-1964 native resolution • 3.5 lbs</div>
+              <div class="choice-price">Standard</div>
+            </button>
+            <button class="config-choice-card" data-group="size" data-val="16" data-price="500">
+              <div class="choice-title">16-inch Liquid Retina XDR</div>
+              <div class="choice-sub">3456-by-2234 native resolution • 4.7 lbs</div>
+              <div class="choice-price">+$500</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Apple Silicon Chip -->
+        <div class="config-step-box">
+          <span class="step-num">02</span>
+          <h3 class="step-title">Choose your Apple Silicon</h3>
+          <div class="config-pill-grid">
+            <button class="config-choice-card" data-group="chip" data-val="m4" data-price="0">
+              <div class="choice-title">Apple M4</div>
+              <div class="choice-sub">10-core CPU, 10-core GPU, 16-core Neural Engine</div>
+              <div class="choice-price">Included</div>
+            </button>
+            <button class="config-choice-card" data-group="chip" data-val="m4pro" data-price="400">
+              <div class="choice-title">Apple M4 Pro</div>
+              <div class="choice-sub">14-core CPU, 20-core GPU, 273GB/s bandwidth</div>
+              <div class="choice-price">+$400</div>
+            </button>
+            <button class="config-choice-card active" data-group="chip" data-val="m4max" data-price="900">
+              <div class="choice-title">Apple M4 Max</div>
+              <div class="choice-sub">16-core CPU, 40-core GPU, 546GB/s bandwidth</div>
+              <div class="choice-price">+$900</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Unified Memory -->
+        <div class="config-step-box">
+          <span class="step-num">03</span>
+          <h3 class="step-title">Choose Unified Memory (RAM)</h3>
+          <div class="config-pill-grid cols-2">
+            <button class="config-choice-card" data-group="ram" data-val="36" data-price="0">
+              <div class="choice-title">36GB Unified Memory</div>
+              <div class="choice-price">Included</div>
+            </button>
+            <button class="config-choice-card" data-group="ram" data-val="48" data-price="200">
+              <div class="choice-title">48GB Unified Memory</div>
+              <div class="choice-price">+$200</div>
+            </button>
+            <button class="config-choice-card active" data-group="ram" data-val="64" data-price="400">
+              <div class="choice-title">64GB Unified Memory</div>
+              <div class="choice-price">+$400</div>
+            </button>
+            <button class="config-choice-card" data-group="ram" data-val="128" data-price="1000">
+              <div class="choice-title">128GB Unified Memory</div>
+              <div class="choice-price">+$1,000</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. Storage -->
+        <div class="config-step-box">
+          <span class="step-num">04</span>
+          <h3 class="step-title">Choose Fast NVMe Storage</h3>
+          <div class="config-pill-grid cols-2">
+            <button class="config-choice-card active" data-group="storage" data-val="1tb" data-price="0">
+              <div class="choice-title">1TB SSD Storage</div>
+              <div class="choice-price">Included</div>
+            </button>
+            <button class="config-choice-card" data-group="storage" data-val="2tb" data-price="400">
+              <div class="choice-title">2TB SSD Storage</div>
+              <div class="choice-price">+$400</div>
+            </button>
+            <button class="config-choice-card" data-group="storage" data-val="4tb" data-price="1000">
+              <div class="choice-title">4TB SSD Storage</div>
+              <div class="choice-price">+$1,000</div>
+            </button>
+            <button class="config-choice-card" data-group="storage" data-val="8tb" data-price="2200">
+              <div class="choice-title">8TB SSD Storage</div>
+              <div class="choice-price">+$2,200</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Summary Card -->
+      <div class="config-summary-sticky">
+        <div class="summary-card-inner">
+          <div class="summary-device-thumb">
+            <div class="thumb-label" id="summary-device-title">14-inch MacBook Pro — Space Black</div>
+          </div>
+
+          <div class="summary-specs-list" id="summary-specs-list">
+            <div class="summary-line"><span>Chip</span><strong id="sum-chip">Apple M4 Max</strong></div>
+            <div class="summary-line"><span>Memory</span><strong id="sum-ram">64GB Unified Memory</strong></div>
+            <div class="summary-line"><span>Storage</span><strong id="sum-storage">1TB SSD Storage</strong></div>
+            <div class="summary-line"><span>Display</span><strong id="sum-display">14" Liquid Retina XDR</strong></div>
+            <div class="summary-line"><span>Delivery</span><strong>Free Delivery by Tomorrow</strong></div>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-pricing-row">
+            <div class="total-label">Total Price</div>
+            <div class="total-price-wrap">
+              <span class="currency">$</span>
+              <span class="rolling-price" id="config-total-price">2,899</span>
+            </div>
+          </div>
+          <div class="summary-monthly" id="config-monthly-price">or $241.58/mo. for 12 mo. with Apple Card</div>
+
+          <button id="add-to-bag-btn" class="btn-primary-block">Add to Bag</button>
+          <div class="apple-guarantee-note">
+            <span>Free 14-day returns • 1-Year Apple Limited Warranty</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: TECH SPECS COMPARISON ACCORDION -->
+  <section class="section-container" id="tech-specs">
+    <div class="section-header text-center">
+      <span class="section-badge">Full Comparison</span>
+      <h2 class="section-title">Specifications at a glance.</h2>
+      <p class="section-subtitle">Compare performance, battery life, displays, and ports across the entire lineup.</p>
+    </div>
+
+    <div class="specs-table-wrapper">
+      <div class="specs-accordion">
+        <div class="spec-row">
+          <div class="spec-title">Chip & Processing</div>
+          <div class="spec-detail">Apple M4, M4 Pro, or M4 Max chip with up to 16 CPU cores (12 performance and 4 efficiency) and up to 40 GPU cores with hardware-accelerated ray tracing.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-title">Neural Engine</div>
+          <div class="spec-detail">16-core Neural Engine capable of over 38 trillion operations per second for on-device AI tasks and Apple Intelligence.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-title">Display & Color</div>
+          <div class="spec-detail">Liquid Retina XDR with 1,000,000:1 contrast ratio, 1,000 nits sustained full-screen, 1,600 nits peak HDR, 1 billion colors, P3 wide color gamut, and True Tone.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-title">Battery & Power</div>
+          <div class="spec-detail">Up to 24 hours Apple TV app movie playback and up to 16 hours wireless web on 16-inch model. Fast-charge capable with 140W USB-C Power Adapter.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-title">Audio & Microphones</div>
+          <div class="spec-detail">High-fidelity six-speaker sound system with force-cancelling woofers, wide stereo sound, support for Spatial Audio when playing music or video with Dolby Atmos.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-title">Wireless & Connectivity</div>
+          <div class="spec-detail">Wi-Fi 6E (802.11ax) + Bluetooth 5.3 + Three Thunderbolt 5 ports with support for charging, DisplayPort, and up to 120Gb/s data.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLE FOOTER -->
+  <footer class="apple-footer">
+    <div class="footer-container">
+      <div class="footer-legal-notes">
+        <p>1. Screen size is measured diagonally. The displays on the 14-inch and 16-inch MacBook Pro have rounded corners at the top. When measured as a standard rectangular shape, the screens are 14.2 inches and 16.2 inches diagonally (actual viewable area is less).</p>
+        <p>2. Testing conducted by Apple in August 2026 using preproduction 16-inch MacBook Pro systems with Apple M4 Max, 16-core CPU, 40-core GPU, 128GB of RAM, and 8TB SSD. Battery life varies by use and configuration.</p>
+        <p>3. Trade-in values will vary based on the condition, year, and configuration of your eligible trade-in device.</p>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-bottom-row">
+        <div class="footer-copyright">Copyright © 2026 Apple Inc. All rights reserved. Inter typography tuned for Apple Pro visual standards.</div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Sales and Refunds</a>
+          <a href="#">Legal</a>
+          <a href="#">Site Map</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CHECKOUT / ORDER SUCCESS MODAL -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modal-close-btn">✕</button>
+      <div class="modal-success-icon">✓</div>
+      <h3 class="modal-title">Your MacBook Pro is ready.</h3>
+      <p class="modal-desc" id="modal-summary-text">14-inch MacBook Pro with Apple M4 Max, 64GB Unified Memory, and 1TB SSD has been reserved.</p>
+      <div class="modal-order-meta">
+        <div class="meta-item"><span>Delivery:</span><strong>Tomorrow by 10:30 AM</strong></div>
+        <div class="meta-item"><span>Pickup:</span><strong>Apple Fifth Avenue</strong></div>
+        <div class="meta-item"><span>Total:</span><strong id="modal-total-price">$2,899.00</strong></div>
+      </div>
+      <button class="btn-primary-block" id="modal-confirm-btn">Complete Express Checkout</button>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Logic -->
   <script src="app.js"></script>
 </body>
 </html>
