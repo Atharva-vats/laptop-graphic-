@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Frame Experience</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Preloader Screen -->
+  <div id="loader" class="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-bar-bg">
+        <div id="loader-bar" class="loader-bar"></div>
+      </div>
+      <div id="loader-text" class="loader-text">Loading 0%</div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Fixed Canvas Background -->
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- Scroll Height Container to Drive Playback -->
+  <div class="scroll-track" id="scroll-track"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
