@@ -577,27 +577,57 @@
   }
 
   // ==========================================
-  // 2. MAGNETIC CURSOR & FOLLOWER
+  // 2. MAGNETIC MAGIC MOUSE CURSOR & FOLLOWER
   // ==========================================
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
   let followerX = mouseX;
   let followerY = mouseY;
+  let currentTilt = 0;
 
   function initCursor() {
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       if (cursorDot) {
-        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      }
+      if (cursorFollower) {
+        cursorFollower.classList.add('visible');
       }
     }, { passive: true });
 
+    document.addEventListener('mouseleave', () => {
+      if (cursorFollower) cursorFollower.classList.remove('visible');
+      if (cursorDot) cursorDot.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', () => {
+      if (cursorFollower) cursorFollower.classList.add('visible');
+      if (cursorDot) cursorDot.style.opacity = '1';
+    });
+
+    // Clicking depression
+    window.addEventListener('mousedown', () => {
+      if (cursorFollower) cursorFollower.classList.add('clicking');
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (cursorFollower) cursorFollower.classList.remove('clicking');
+    });
+
     function renderFollower() {
-      followerX += (mouseX - followerX) * 0.15;
-      followerY += (mouseY - followerY) * 0.15;
+      const vx = mouseX - followerX;
+      const vy = mouseY - followerY;
+      followerX += vx * 0.14;
+      followerY += vy * 0.14;
+
+      // Subtle dynamic tilt based on horizontal velocity
+      const targetTilt = Math.max(-14, Math.min(14, vx * 0.35));
+      currentTilt += (targetTilt - currentTilt) * 0.15;
+
       if (cursorFollower) {
-        cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+        cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px) translate(-50%, -50%) rotate(${currentTilt}deg)`;
       }
       requestAnimationFrame(renderFollower);
     }
